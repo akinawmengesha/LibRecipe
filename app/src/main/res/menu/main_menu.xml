@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/new_activity"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_favorite_border"
+        android:iconTint="@color/white"
+        android:title="@string/new_activity"
+        android:orderInCategory="100"/>
+
+    <item
+        android:id="@+id/show_favorites"
+        android:title="@string/show_favorites"
+        android:icon="@drawable/ic_favorite"
+        app:showAsAction="ifRoom" />
+
+</menu>

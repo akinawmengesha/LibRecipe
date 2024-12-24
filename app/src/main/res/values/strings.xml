@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">LibRecipe</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="recipes_fragment">Recipes</string>
+    <string name="favorite_recipes_fragment">Favorite</string>
+    <string name="no_internet_connection">No Internet Connection.</string>
+    <string name="no_favorite_recipe">No Favroite Recipe\n</string>
+    <string name="delete_all">Delete All</string>
+    <string name="delete_favorite_menu">Delete Favorite Menu</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="ready_in_minutes">%1$d min</string>
+    <string name="new_activity">New Activity</string> <!-- Add your desired text for the new activity -->
+    <string name="show_favorites">Show Favorites</string> <!-- Add the desired text for the show favorites menu item -->
+    <string name="recipes">Recipes</string> <!-- Recipes label -->
+    <string name="add_recipe">Add Recipe</string>
+    <string name="favorites">Favorites</string>
+    <string name="summary">Summary</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="save_recipe">Save Recipe</string>
+    <string name="recipe_image_preview">Recipe Image Preview</string>
+    <string name="select_image">Select an Image</string>
+    <string name="recipe_image">Recipe Image</string>
+    <string name="recipe_title">Recipe Title</string>
+    <string name="recipe_time">Preparation Time</string>
+    <string name="recipe_description">Recipe Description</string>
+    <string name="source_name">Source Name</string>
+    <string name="source_url">Recipe Source</string>
+    <string name="logo_image">Logo Image</string>
+    <string name="favorite_title">Recipe Title</string>
+    <string name="favorite_description">Recipe Description</string>
+    <string name="favorite_leaf">Leaf Icon</string>
+    <string name="recipes_description">View available recipes</string>
+    <string name="favorites_description">View favorite recipes</string>
+</resources>

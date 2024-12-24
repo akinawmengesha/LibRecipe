@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        tools:context=".activites.AddRecipeActivity">
+
+        <!-- Recipe Title EditText -->
+        <EditText
+            android:id="@+id/editTextRecipeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/recipe_title"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/darker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.9" />
+
+        <!-- Recipe Summary EditText -->
+        <EditText
+            android:id="@+id/editTextRecipeSummary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/summary"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/contextualStatusBarColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextRecipeTitle"
+            app:layout_constraintWidth_percent="0.9" />
+
+        <!-- Recipe Ingredients EditText -->
+        <EditText
+            android:id="@+id/editTextRecipeIngredients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/ingredients"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/contextualStatusBarColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextRecipeSummary"
+            app:layout_constraintWidth_percent="0.9" />
+
+        <!-- Recipe Instructions EditText -->
+        <EditText
+            android:id="@+id/editTextRecipeInstructions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/instructions"
+            android:padding="12dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/contextualStatusBarColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextRecipeIngredients"
+            app:layout_constraintWidth_percent="0.9" />
+
+        <!-- Recipe Image Preview -->
+        <ImageView
+            android:id="@+id/imageViewRecipe"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@android:drawable/ic_menu_camera"
+            android:contentDescription="@string/recipe_image_preview"
+            app:layout_constraintTop_toBottomOf="@id/editTextRecipeInstructions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.9"
+            android:scaleType="centerCrop" />
+
+        <!-- Add Image Button -->
+        <ImageButton
+            android:id="@+id/imageButtonAddRecipeImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_camera"
+            android:contentDescription="@string/select_image"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toBottomOf="@id/imageViewRecipe"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <!-- Save Recipe Button -->
+        <Button
+            android:id="@+id/buttonSaveRecipe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save_recipe"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_button"
+            android:padding="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageButtonAddRecipeImage"
+            android:layout_marginTop="24dp"
+            app:layout_constraintWidth_percent="0.9" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
