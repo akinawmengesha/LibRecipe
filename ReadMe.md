@@ -71,4 +71,5 @@
   - Recipe list parsed via Retrofit, stored in a Room database for offline access.
     <div align="center">
         <img src="images/offline.jpg" alt="App Screenshot" width="200" height="400"/>
+        <img src="images/offline2.jpg" alt="App Screenshot" width="200" height="400"/>
     </div>
