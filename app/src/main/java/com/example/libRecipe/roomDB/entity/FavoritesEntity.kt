@@ -1,18 +1,14 @@
 package com.example.libRecipe.roomDB.entity
 
-import androidx.room.ColumnInfo
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
-import com.example.libRecipe.models.ResultListing
-import com.example.libRecipe.roomDB.ResultConverter
 import com.google.gson.annotations.SerializedName
-
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "favorite_recipes_table")
-class FavoritesEntity
-    (
+@Parcelize
+data class FavoritesEntity(
     @PrimaryKey(autoGenerate = true)
     var AUTOid: Int = 0,
     @SerializedName("aggregateLikes")
@@ -42,5 +38,5 @@ class FavoritesEntity
     @SerializedName("vegetarian")
     val vegetarian: Boolean,
     @SerializedName("veryHealthy")
-    val veryHealthy: Boolean,
-)
+    val veryHealthy: Boolean
+) : Parcelable

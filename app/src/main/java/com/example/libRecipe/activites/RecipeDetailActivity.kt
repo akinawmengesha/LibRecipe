@@ -1,5 +1,7 @@
 package com.example.libRecipe.activites
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -7,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.example.libRecipe.R
 import com.example.libRecipe.models.ResultListing
+import com.example.libRecipe.roomDB.entity.FavoritesEntity
 import org.jsoup.Jsoup
 
 class RecipeDetailActivity : AppCompatActivity() {
@@ -30,16 +33,18 @@ class RecipeDetailActivity : AppCompatActivity() {
         sourceNameTextView = findViewById(R.id.sourceNameTextView)
         sourceUrlTextView = findViewById(R.id.sourceUrlTextView)
 
-        // Retrieve the recipe data passed via the Intent
-        val recipe: ResultListing? = intent.getParcelableExtra("RECIPE_DETAIL")
+        // Retrieve the recipe object passed via the Intent
+        val recipe: Any? = intent.getParcelableExtra("RECIPE_DETAIL")
 
-        // Check if the recipe is not null and populate the UI with the recipe data
-        recipe?.let {
-            populateRecipeDetails(it)
+        // Check if the recipe is an instance of ResultListing or FavoritesEntity and populate accordingly
+        when (recipe) {
+            is ResultListing -> populateRecipeDetailsFromApi(recipe)
+            is FavoritesEntity -> populateRecipeDetailsFromDatabase(recipe)
         }
     }
 
-    private fun populateRecipeDetails(recipe: ResultListing) {
+    // Populate Recipe Details for ResultListing (API data)
+    private fun populateRecipeDetailsFromApi(recipe: ResultListing) {
         // Set the recipe image using Coil
         recipeImageView.load(recipe.image) {
             crossfade(600)
@@ -56,6 +61,32 @@ class RecipeDetailActivity : AppCompatActivity() {
         // Set source name and URL
         sourceNameTextView.text = recipe.sourceName
         sourceUrlTextView.text = recipe.sourceUrl
+
+        // Make source URL clickable
+        sourceUrlTextView.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(recipe.sourceUrl))
+            startActivity(browserIntent)
+        }
+    }
+
+    // Populate Recipe Details for FavoritesEntity (Room DB data)
+    private fun populateRecipeDetailsFromDatabase(recipe: FavoritesEntity) {
+        // Set the recipe image using Coil
+        recipeImageView.load(recipe.image) {
+            crossfade(600)
+            error(R.drawable.ic_error_placeholder)
+        }
+
+        // Set the title and description
+        titleTextView.text = recipe.title
+        descriptionTextView.text = Jsoup.parse(recipe.summary).text()
+
+        // Make source URL clickable
+        sourceUrlTextView.text = recipe.sourceUrl
+        sourceUrlTextView.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(recipe.sourceUrl))
+            startActivity(browserIntent)
+        }
     }
 
     // Method to parse HTML content (if any) in the description

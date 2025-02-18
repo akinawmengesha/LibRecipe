@@ -15,12 +15,10 @@ import com.example.libRecipe.Utlis.NetworkListener
 import com.example.libRecipe.Utlis.NetworkResult
 import com.example.libRecipe.adapter.RecipesAdapter
 import com.example.libRecipe.databinding.FragmentRecipesBinding
-import com.example.libRecipe.roomDB.database.FoodDatabase
 import com.example.libRecipe.viewmodel.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
@@ -28,15 +26,14 @@ class RecipesFragment : Fragment() {
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
     private lateinit var recipesViewModel: RecipesViewModel
+
+    // Pass only the ViewModel to RecipesAdapter
     private val mAdapter: RecipesAdapter by lazy {
-        RecipesAdapter(recipesViewModel, db.getFoodRecipeDao())  // Pass the required parameters here
+        RecipesAdapter(recipesViewModel)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private lateinit var networkListener: NetworkListener
-
-    @Inject
-    lateinit var db: FoodDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +47,7 @@ class RecipesFragment : Fragment() {
         _binding = FragmentRecipesBinding.inflate(inflater, container, false)
 
         // Set up the toolbar
-        binding.toolbar.title = "Recipes List"
+        binding.toolbar.title = ""
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
         // Observing the 'backOnline' status

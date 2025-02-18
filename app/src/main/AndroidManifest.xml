@@ -20,7 +20,7 @@
 
         <!-- Set LoginActivity as the entry point -->
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".activites.HomePage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,8 +42,5 @@
         <activity
             android:name=".activites.FavoriteActivity"
             android:exported="false" />
-        <activity
-            android:name=".activites.HomePage"
-            android:exported="true" />
     </application>
 </manifest>

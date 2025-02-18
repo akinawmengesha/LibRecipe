@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.libRecipe.viewmodel.FavViewModel
 
-
 @AndroidEntryPoint
 class FavoriteRecipesFragment : androidx.fragment.app.Fragment() {
 
@@ -82,7 +81,8 @@ class FavoriteRecipesFragment : androidx.fragment.app.Fragment() {
             favViewModel.getFullListFav().collect { database ->
                 if (database.isNotEmpty()) {
                     Log.d("FavoriteRecipesFragment", "readDatabase called!")
-                    mAdapter.setData(database, db.getFoodRecipeDao()) // Pass the data to adapter
+                    // Pass only the list of data (FavoritesEntity) to the adapter
+                    mAdapter.setData(database)  // Pass only the List<FavoritesEntity> to setData
                     binding.favoriteRecipesRecyclerView.visibility = View.VISIBLE
                     binding.noDataImageView.visibility = View.GONE
                     binding.noDataTextView.visibility = View.GONE
@@ -97,8 +97,7 @@ class FavoriteRecipesFragment : androidx.fragment.app.Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Clear contextual action mode on fragment destruction
-       // mAdapter.clearContextualActionMode()
+        // Clear binding to prevent memory leaks
         _binding = null
     }
 }

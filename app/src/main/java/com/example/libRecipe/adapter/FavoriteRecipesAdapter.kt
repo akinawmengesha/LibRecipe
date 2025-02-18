@@ -1,6 +1,7 @@
 package com.example.libRecipe.adapter
 
 import android.content.Intent
+import android.net.Uri
 import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.Menu
@@ -17,15 +18,14 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.libRecipe.R
 import com.example.libRecipe.Utlis.RecipesDiffUtil
-import com.example.libRecipe.activites.RecipeDetailActivity
 import com.example.libRecipe.databinding.FavoriteRecipeRowLayoutBinding
-import com.example.libRecipe.roomDB.dao.FoodRecipeDao
 import com.example.libRecipe.roomDB.entity.FavoritesEntity
 import com.example.libRecipe.viewmodel.FavViewModel
+import com.example.libRecipe.activites.RecipeDetailActivity
 import org.jsoup.Jsoup
 
 class FavoriteRecipesAdapter(
-    private val requireActivity: FragmentActivity,
+    private val activity: FragmentActivity,
     private val favViewModel: FavViewModel
 ) : RecyclerView.Adapter<FavoriteRecipesAdapter.MyViewHolder>(), ActionMode.Callback {
 
@@ -74,11 +74,13 @@ class FavoriteRecipesAdapter(
         val recipe = favoriteRecipes[position]
         holder.bind(recipe)
 
+        // Remove from favorites
         holder.binding.favoriteHeartImageView.setOnClickListener {
             favViewModel.deleteFavoriteRecipe(recipe)
-            Toast.makeText(requireActivity, "Removed from Favorites", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Removed from Favorites", Toast.LENGTH_SHORT).show()
         }
 
+        // Open Recipe Details on Click
         holder.binding.favoriteRecipesRowLayout.apply {
             setOnClickListener {
                 if (multiSelection) applySelection(holder, recipe) else openRecipeDetails(recipe)
@@ -86,7 +88,7 @@ class FavoriteRecipesAdapter(
             setOnLongClickListener {
                 if (!multiSelection) {
                     multiSelection = true
-                    requireActivity.startActionMode(this@FavoriteRecipesAdapter)
+                    activity.startActionMode(this@FavoriteRecipesAdapter)
                 }
                 applySelection(holder, recipe)
                 true
@@ -119,10 +121,10 @@ class FavoriteRecipesAdapter(
 
     private fun changeItemStyle(holder: MyViewHolder, backgroundColor: Int, strokeColor: Int) {
         holder.binding.favoriteRecipesRowLayout.setBackgroundColor(
-            ContextCompat.getColor(requireActivity, backgroundColor)
+            ContextCompat.getColor(activity, backgroundColor)
         )
         holder.binding.favoriteRowCardView.strokeColor =
-            ContextCompat.getColor(requireActivity, strokeColor)
+            ContextCompat.getColor(activity, strokeColor)
     }
 
     private fun applyActionModeTitle() {
@@ -138,7 +140,7 @@ class FavoriteRecipesAdapter(
 
     override fun onCreateActionMode(actionMode: ActionMode?, menu: Menu?): Boolean {
         actionMode?.menuInflater?.inflate(R.menu.favorites_contextual_menu, menu)
-        mActionMode = actionMode!!
+        mActionMode = actionMode ?: throw IllegalStateException("ActionMode cannot be null")
         return true
     }
 
@@ -147,7 +149,7 @@ class FavoriteRecipesAdapter(
     override fun onActionItemClicked(actionMode: ActionMode?, menuItem: MenuItem?): Boolean {
         if (menuItem?.itemId == R.id.delete_favorite_recipe_menu) {
             selectedRecipes.forEach { favViewModel.deleteFavoriteRecipe(it) }
-            Toast.makeText(requireActivity, "${selectedRecipes.size} recipes removed.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "${selectedRecipes.size} recipes removed.", Toast.LENGTH_SHORT).show()
             selectedRecipes.clear()
             actionMode?.finish()
         }
@@ -160,7 +162,7 @@ class FavoriteRecipesAdapter(
         selectedRecipes.clear()
     }
 
-    fun setData(newRecipes: List<FavoritesEntity>, foodRecipeDao: FoodRecipeDao) {
+    fun setData(newRecipes: List<FavoritesEntity>) {
         val diffUtil = RecipesDiffUtil(favoriteRecipes, newRecipes)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         favoriteRecipes = newRecipes
@@ -168,7 +170,9 @@ class FavoriteRecipesAdapter(
     }
 
     private fun openRecipeDetails(recipe: FavoritesEntity) {
-       // val intent = Intent(requireActivity, RecipeDetailActivity::class.java)
-        //requireActivity.startActivity(intent)
+        val intent = Intent(activity, RecipeDetailActivity::class.java).apply {
+            putExtra("RECIPE_DETAIL", recipe)  // Passing as Parcelable
+        }
+        activity.startActivity(intent)
     }
 }

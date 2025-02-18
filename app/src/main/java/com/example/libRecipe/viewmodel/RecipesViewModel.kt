@@ -17,11 +17,9 @@ import com.example.libRecipe.pagining.MainPagingSource
 import com.example.libRecipe.repository.RecipesRepository
 import com.example.libRecipe.roomDB.dao.FoodRecipeDao
 import com.example.libRecipe.roomDB.entity.FavoritesEntity
-import com.example.libRecipe.roomDB.entity.RecipeEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -30,7 +28,7 @@ class RecipesViewModel @Inject constructor(
     application: Application,
     private val postRepository: RecipesRepository,
     private val foodRecipeDao: FoodRecipeDao,
-    private val dataStoreRepository: DataStoreRepository,
+    private val dataStoreRepository: DataStoreRepository
 ) : AndroidViewModel(application) {
 
     // Network Status Management
@@ -41,6 +39,10 @@ class RecipesViewModel @Inject constructor(
     // Retrofit API Call
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
 
+    // Observing recipes in Room
+    val readRecipes: LiveData<List<ResultListing>> = postRepository.local.readRecipes().asLiveData()
+
+    // Fetch recipes from server
     fun getRecipes() = viewModelScope.launch {
         getRecipesSafeCall()
     }
@@ -64,17 +66,10 @@ class RecipesViewModel @Inject constructor(
         }
     }
 
-    /** Room Database Operations **/
-
-    // Observing recipes in Room
-    val readRecipes: LiveData<List<ResultListing>> = postRepository.local.readRecipes().asLiveData()
-    val readFavoriteRecipes: LiveData<List<FavoritesEntity>> = postRepository.local.readFavoriteRecipes().asLiveData()
-
     // Offline caching of recipes
     private fun offlineCacheRecipes(foodRecipe: List<ResultListing>?) {
         insertRecipes(foodRecipe)
     }
-
 
     // Insert multiple recipes into Room
     private fun insertRecipes(recipesEntity: List<ResultListing>?) =
@@ -103,6 +98,9 @@ class RecipesViewModel @Inject constructor(
             }
         }
     }
+    fun isRecipeFavorite(recipeId: Int): LiveData<Boolean> {
+        return foodRecipeDao.isFavoriteLive(recipeId)
+    }
 
     // Check if the device has internet connection
     private fun hasInternetConnection(): Boolean {
@@ -116,7 +114,7 @@ class RecipesViewModel @Inject constructor(
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
     }
 
-    // Manage network status and data persistence
+    // Save network status
     private fun saveBackOnline(backOnline: Boolean) = viewModelScope.launch(Dispatchers.IO) {
         dataStoreRepository.saveBackOnline(backOnline)
     }
@@ -132,32 +130,24 @@ class RecipesViewModel @Inject constructor(
         }
     }
 
-    // Fetch favorite recipes
+    // Favorite recipes
     fun getFavoriteRecipes(): LiveData<List<ResultListing>> {
         return foodRecipeDao.getFavoriteRecipes() // Get favorite recipes from the DAO
     }
 
-    /** I/O operations for managing favorite recipes **/
-    fun deleteAllFavoriteRecipes() = viewModelScope.launch(Dispatchers.IO) {
-        postRepository.local.deleteAllFavoriteRecipes()
-    }
-
+    // Insert a favorite recipe
     fun insertFavoriteRecipe(favoritesEntity: FavoritesEntity) =
         viewModelScope.launch(Dispatchers.IO) {
             postRepository.local.insertFavoriteRecipes(favoritesEntity)
         }
 
-    // Check if a recipe is marked as favorite
-    suspend fun isFavorite(recipeId: Int): Boolean? = withContext(Dispatchers.IO) {
-        return@withContext postRepository.local.isFavorite(recipeId)
-    }
-
+    // Delete a favorite recipe
     fun deleteFavoriteRecipe(favoritesEntity: FavoritesEntity) =
         viewModelScope.launch(Dispatchers.IO) {
             postRepository.local.deleteFavoriteRecipe(favoritesEntity)
         }
 
-    /** Pagination with Flow for lazy loading of recipes **/
+    // Pagination with Flow for lazy loading of recipes
     val getDataFromRoomWithOffset = Pager(
         PagingConfig(
             pageSize = 5,

@@ -54,9 +54,6 @@ class HomePage : AppCompatActivity() {
             )
         )
 
-        // Bind bottom navigation view with navController
-        binding.bottomNavigationView.setupWithNavController(navController)
-
         // Handle "Add Recipe" button click
         binding.buttonAddRecipe.setOnClickListener {
             val intent = Intent(this, AddRecipeActivity::class.java)

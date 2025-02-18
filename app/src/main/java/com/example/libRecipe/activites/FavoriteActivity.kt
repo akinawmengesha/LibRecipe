@@ -7,7 +7,6 @@ import android.widget.RelativeLayout
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.libRecipe.R
 import com.example.libRecipe.adapter.FavoriteRecipesAdapter
 import com.example.libRecipe.databinding.ActivityFavoriteBinding
 import com.example.libRecipe.roomDB.database.FoodDatabase
@@ -32,16 +31,12 @@ class FavoriteActivity : androidx.appcompat.app.AppCompatActivity() {
         // Inflate the layout using ViewBinding
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)  // Use binding.root here
-
         // Set title of the activity
         title = "Favorite Listing"
-
         // Initialize UI components and RecyclerView
         setUi()
-
         // Show progress bar before data is loaded
         showProgress()
-
         // Fetch and display the favorite recipes
         lifecycleScope.launch {
             favViewModel.getFullListFav().collect { data ->
@@ -56,8 +51,8 @@ class FavoriteActivity : androidx.appcompat.app.AppCompatActivity() {
                     // Hide the empty view and show the RecyclerView
                     binding.emptyView.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
-                    // Pass the data and FoodRecipeDao to the adapter
-                    postAdapter.setData(data, db.getFoodRecipeDao())
+                    // Pass only the list of data to the adapter
+                    postAdapter.setData(data)
                 }
             }
         }

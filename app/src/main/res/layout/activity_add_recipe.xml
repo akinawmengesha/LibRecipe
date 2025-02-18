@@ -12,7 +12,7 @@
         android:padding="16dp"
         tools:context=".activites.AddRecipeActivity">
 
-        <!-- Recipe Title EditText -->
+        <!-- Recipe Title -->
         <EditText
             android:id="@+id/editTextRecipeTitle"
             android:layout_width="0dp"
@@ -22,12 +22,12 @@
             android:padding="12dp"
             android:textColor="@android:color/black"
             android:textColorHint="@color/darker"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent="0.9" />
 
-        <!-- Recipe Summary EditText -->
+        <!-- Recipe Summary -->
         <EditText
             android:id="@+id/editTextRecipeSummary"
             android:layout_width="0dp"
@@ -37,39 +37,27 @@
             android:padding="12dp"
             android:textColor="@android:color/black"
             android:textColorHint="@color/contextualStatusBarColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextRecipeTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
             app:layout_constraintWidth_percent="0.9" />
 
-        <!-- Recipe Ingredients EditText -->
+        <!-- Preparation Time -->
         <EditText
-            android:id="@+id/editTextRecipeIngredients"
+            android:id="@+id/editTextReadyInMinutes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_edittext"
-            android:hint="@string/ingredients"
+            android:hint="Enter preparation time (minutes)"
+            android:inputType="number"
             android:padding="12dp"
             android:textColor="@android:color/black"
             android:textColorHint="@color/contextualStatusBarColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextRecipeSummary"
-            app:layout_constraintWidth_percent="0.9" />
-
-        <!-- Recipe Instructions EditText -->
-        <EditText
-            android:id="@+id/editTextRecipeInstructions"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_edittext"
-            android:hint="@string/instructions"
-            android:padding="12dp"
-            android:textColor="@android:color/black"
-            android:textColorHint="@color/contextualStatusBarColor"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextRecipeIngredients"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
             app:layout_constraintWidth_percent="0.9" />
 
         <!-- Recipe Image Preview -->
@@ -77,15 +65,14 @@
             android:id="@+id/imageViewRecipe"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:src="@android:drawable/ic_menu_camera"
             android:contentDescription="@string/recipe_image_preview"
-            app:layout_constraintTop_toBottomOf="@id/editTextRecipeInstructions"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_camera"
+            app:layout_constraintTop_toBottomOf="@id/editTextReadyInMinutes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.9"
-            android:scaleType="centerCrop" />
+            android:layout_marginTop="16dp"
+            app:layout_constraintWidth_percent="0.9" />
 
         <!-- Add Image Button -->
         <ImageButton
@@ -105,15 +92,16 @@
             android:id="@+id/buttonSaveRecipe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/save_recipe"
-            android:textColor="@android:color/white"
             android:background="@drawable/rounded_button"
             android:padding="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/save_recipe"
+            android:textColor="@android:color/white"
             app:layout_constraintTop_toBottomOf="@id/imageButtonAddRecipeImage"
-            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
             app:layout_constraintWidth_percent="0.9" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>

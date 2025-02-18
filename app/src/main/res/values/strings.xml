@@ -7,9 +7,6 @@
     <string name="no_favorite_recipe">No Favroite Recipe\n</string>
     <string name="delete_all">Delete All</string>
     <string name="delete_favorite_menu">Delete Favorite Menu</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
     <string name="ready_in_minutes">%1$d min</string>
     <string name="new_activity">New Activity</string> <!-- Add your desired text for the new activity -->
     <string name="show_favorites">Show Favorites</string> <!-- Add the desired text for the show favorites menu item -->

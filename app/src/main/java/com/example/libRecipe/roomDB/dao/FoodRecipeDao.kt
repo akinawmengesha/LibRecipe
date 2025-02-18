@@ -9,7 +9,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.example.libRecipe.models.ResultListing
 import com.example.libRecipe.roomDB.entity.FavoritesEntity
-import com.example.libRecipe.roomDB.entity.RecipeEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -75,14 +74,14 @@ interface FoodRecipeDao {
     @Query("SELECT * FROM favorite_recipes_table ORDER BY recipeId ASC")
     fun readFavoriteRecipes(): Flow<List<FavoritesEntity>>
 
+    @Query("SELECT EXISTS (SELECT 1 FROM favorite_recipes_table WHERE recipeId = :recipeId)")
+    fun isFavoriteLive(recipeId: Int): LiveData<Boolean>
+
     @Delete
     suspend fun deleteFavoriteRecipe(favoritesEntity: FavoritesEntity)
 
     @Query("DELETE FROM favorite_recipes_table")
     suspend fun deleteAllFavoriteRecipes()
-
-
-
     @Delete
     suspend fun deleteFavorite(favorite: FavoritesEntity)
 
