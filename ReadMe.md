@@ -43,6 +43,7 @@
     
     <div align="center">
         <img src="images/detail.jpg" alt="App Screenshot" width="200" height="400"/>
+        <img src="images/detail_light.jpg" alt="App Screenshot" width="200" height="400"/>
     </div>
     
   - Favorites functionality allowing users to add/remove recipes and manage favorites, with options for single or multiple
