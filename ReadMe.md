@@ -34,7 +34,11 @@
   - Recipe list parsed via Retrofit, stored in a Room database for offline access.
   - Favorites functionality allowing users to add/remove recipes and manage favorites, with options for single or multiple
     deletions.
-  - Users can add recipe manually , and see favorite recipes 
+  - Users can add recipe manually , and see favorite recipes
+  -   <div align="center">
+        <img src="images/add.jpg" alt="App Screenshot" width="200" height="400"/>
+        <img src="images/added.jpg" alt="App Screenshot" width="200" height="400"/>
+    </div>
   - Detail Recipe Navigation
     
     <div align="center">
