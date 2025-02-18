@@ -35,13 +35,6 @@
   - Favorites functionality allowing users to add/remove recipes and manage favorites, with options for single or multiple
     deletions.
   - Users can add recipe manually , and see favorite recipes 
-  - The app has authorization page that uses email : admin@gmail.com and pass: admin , authorized users can access the app
-    feature
-    
-    <div align="center">
-        <img src="images/login.jpg" alt="App Screenshot" width="200" height="400"/>
-    </div>
-    
   - Detail Recipe Navigation
     
     <div align="center">
